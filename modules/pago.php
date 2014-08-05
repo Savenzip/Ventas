@@ -1,20 +1,15 @@
 <?php
-if (isset ( $_POST ["total"] )) {
-	// header( 'Location: caja,.php' ) ;
-	$total = $_POST ["total"];
-} else
-	$total = 560; // solo para prueba despues esto se elimina.
-include 'config/includes.php';
-$user = 168114737;
+if (isset ( $_POST ["monto"] )) {
+	//header( 'Location: index.php?modulo=caja' ) ;
+	$total = $_POST ["monto"];
+}
 $Caja = new Caja ();
-echo (date ( "D d-m-Y H:i:s", time () ));
-
 ?>
 <script type="text/javascript">
 function calculaVuelto() {
 	var form = document.getElementById("frm1");
 	form.Vuelto.value = form.Efectivo.value-form.total.value;
-	if(form.Vuelto.value > 0){
+	if(form.Vuelto.value >= 0){
 		form.pagar.disabled = false;
 form.Vuelto.style.border.color = 'black';
 		
@@ -23,7 +18,8 @@ else { form.pagar.disabled = true;
 form.Vuelto.style.border.color = 'red';}
 }
 </script>
-
+<div class="rightBar"></div>
+<div class="centerBar">
 <fieldset>
 	<legend>Pago</legend>
 	<form action="#" id="frm1" method="post" autocomplete="off">
@@ -52,3 +48,4 @@ form.Vuelto.style.border.color = 'red';}
 		</table>
 	</form>
 </fieldset>
+</div>

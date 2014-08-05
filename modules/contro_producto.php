@@ -1,7 +1,8 @@
-
+<div class="rightBar"></div>
+<div class="centerBar">
 <h1 align="center">Control Productos</h1>
-<form method="post" action="#">
-	<table border="0" align="center">
+<form method="POST" action="#">
+	<table>
 		<tr>
 			<td>ID Producto:</td>
 			<td><input type="text" name="id" value="" size="10" /> <input
@@ -32,3 +33,4 @@
 		</tr>
 	</table>
 </form>
+</div>

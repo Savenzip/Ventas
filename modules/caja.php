@@ -25,59 +25,61 @@ if (isset ( $_POST ["Delete"] )) {
 	$Caja->delItem ( $_POST ["item"] );
 }
 ?>
+<div class="rightBar">
+	<fieldset>
+		<legend>Carro</legend>
+		<form action="?modulo=pago" method="POST">
+			<table>
+				<tr>
+					<th>Codigo</th>
+					<th>Item</th>
+					<th>Peso</th>
+					<th>Valor</th>
+					<th>Total</th>
+					<th></th>
+				</tr>
+		<?php echo $Caja->getList($user);?>
+		<tr>
+					<td colspan=3><input type="submit" id="Finalizar" name="Finalizar"
+						value="Finalizar" /></td>
 
-<form action="#" method="post" autocomplete="off">
-	<table>
-		<tr>
-			<td>Vendedor:</td>
-			<td><input type="text" name="man" id="man"
-				<?php print $disabled; print $focus1;?>
-				value="<?php print $value;?>" required /></td>
-		</tr>
-		<tr>
-			<td>Voucher:</td>
-			<td><input title="Debe Ingresar numero de Voucher" type="text"
-				value="<?php print $voucher;?>" name="voucher" id="voucher" required /></td>
-		</tr>
-		<tr>
-			<td>Codigo:</td>
-			<td><input title="Debe Ingresar el Codigo del Producto"
-				pattern="^[0-9]{1,4}" type="text" name="cod" id="cod" required
-				<?php print $focus2; ?> /></td>
-		</tr>
-		<tr>
-			<td>Peso:</td>
-			<td><input title="Debe Ingresar el Peso del Producto" type="text"
-				name="peso" id="peso" required /></td>
-		</tr>
-		<tr>
-			<td colspan=2><input type="submit" id="agregar" name="agregar"
-				value="Agregar" /></td>
-		</tr>
-	</table>
-</form>
-<divn class="lista">
-<fieldset>
-	<legend>Carro</legend>
-	<form action="#" method="post">
+					<td colspan=3><input type="submit" id="Anular" name="Anular"
+						value="Anular" /></td>
+				</tr>
+			</table>
+		</form>
+	</fieldset>
+</div>
+<div class="centerBar">
+	<form action="#" method="post" autocomplete="off">
 		<table>
 			<tr>
-				<th>Codigo</th>
-				<th>Item</th>
-				<th>Peso</th>
-				<th>Valor</th>
-				<th>Total</th>
-				<th></th>
+				<td>Vendedor:</td>
+				<td><input type="text" name="man" id="man"
+					<?php print $disabled; print $focus1;?>
+					value="<?php print $value;?>" required /></td>
 			</tr>
-		<?php echo $Caja->getList($user);?>
 			<tr>
-				<td colspan=3><input type="submit" id="Anular" name="Anular"
-					value="Anular" /></td>
-				<td colspan=3><input type="submit" id="Finalizar" name="Finalizar"
-					value="Finalizar" /></td>
-
+				<td>Voucher:</td>
+				<td><input title="Debe Ingresar numero de Voucher" type="text"
+					value="<?php print $voucher;?>" name="voucher" id="voucher"
+					required /></td>
+			</tr>
+			<tr>
+				<td>Codigo:</td>
+				<td><input title="Debe Ingresar el Codigo del Producto"
+					pattern="^[0-9]{1,4}" type="text" name="cod" id="cod" required
+					<?php print $focus2; ?> /></td>
+			</tr>
+			<tr>
+				<td>Peso:</td>
+				<td><input title="Debe Ingresar el Peso del Producto" type="text"
+					name="peso" id="peso" required /></td>
+			</tr>
+			<tr>
+				<td colspan=2><input type="submit" id="agregar" name="agregar"
+					value="Agregar" /></td>
 			</tr>
 		</table>
 	</form>
-</fieldset>
 </div>

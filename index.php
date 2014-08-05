@@ -28,35 +28,28 @@ if (isset ( $_GET ["modulo"] )) {
 }
 $Portal = new Portal ();
 ?>
-<!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
-
-
-<head>
 <title>Carniceria</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link type="text/css" href="style.css" rel="stylesheet" />
 </head>
+
 <body>
 	<div class="wrapper">
-
-		<div class="header"><?php echo (date ( "D d-m-Y H:i:s", time () ));?></div>
-
-		<div class="sidebar">
-		<?php print $Portal->sidebar($_SESSION["pw"]); ?>
-		<a href="?modulo=salir">
+		<div class="header">
+			<?php echo (date ( "D d-m-Y H:i:s", time () ));?>
+		</div>
+		<div class="leftBar">
+			<?php print $Portal->sidebar($_SESSION["pw"]); ?>
+			<a href="?modulo=salir">
 				<button id="menubutton">Cerrar Sesion</button>
 			</a>
-
-		</div>
-
-		<div class="content">
-			<?php include MODPATH . $modulo.".php";?>
-
-		</div>
+		</div><?php include MODPATH . $modulo.".php";?>
 	</div>
+	<!--/div-->
 	<div class="footer">
-		<p>Copyright (c) 2014</p>
+		<p>Copyright &#169; 2014</p>
 	</div>
 </body>
 </html>

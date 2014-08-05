@@ -63,9 +63,11 @@ if (isset ( $_POST ["editar"] )) {
 	}
 }
 ?>
+<div class="rightBar"></div>
+<div class="centerBar">
 <h1 align="center">Control Grupos</h1>
-<form action="#" method="post">
-	<table border="0" align="center">
+<form action="#" method="POST">
+	<table>
 		<tr>
 			<td>ID</td>
 			<?php
@@ -99,3 +101,4 @@ if (isset ( $_POST ["editar"] )) {
 		</tr>
 	</table>
 </form>
+</div>

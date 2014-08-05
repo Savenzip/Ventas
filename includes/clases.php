@@ -45,10 +45,10 @@ class Caja {
 				$monto += round ( $peso * $precio );
 				$list .= "<tr><td>$c_prod</td><td>$nombre_carne</td><td>$peso</td><td>$precio</td><td>" . round ( $peso * $precio ) . "</td><td>
 					<form action=\"#\" method=\"POST\" id=\"form$id\" name=\"form$id\">
-					<input type=\"hidden\" value = \"$id\" name=\"item\" id = \"item\" /></form><button  onclick=\"document.getElementById('form$id').submit();\" id=\"Delete\" name=\"Delete\" class=\"delete\"/>
-					</td></tr>";
+					<input type=\"hidden\" value = \"$id\" name=\"item\" id = \"item\" /><button  onclick=\"document.getElementById('form$id').submit();\" id=\"Delete\" name=\"Delete\" class=\"delete\"/>
+					</td></tr></form>";
 			}
-			$list .= "<tr><td colspan=3></td><td>Total:</td><td>$monto</td><td>";
+			$list .= "<tr><td colspan=3></td><td>Total:</td><td><input type=\"text\" readonly id=\"monto\" name=\"monto\" value=\"$monto\" /></td><td>";
 			$stmt->close ();
 			return $list;
 		} else {
@@ -441,21 +441,19 @@ class producto {
 	function getIDPRODCUTO($idProducto) {
 		if ($stmt = $this->MySQL->PrepareQuery ( PRODUCTO_SEL_PRODCUTO )) {
 			$stmt->bind_param ( "i", $idProducto );
-			$list = '';
 			$stmt->execute ();
-			$stmt->bind_result ( $nombreProducto, $idCCarne, $idCarne, $unidadMedida );
+			$stmt->bind_result ( $nombreProducto, $idCarne, $idCCarne, $unidadMedida );
 			$stmt->fetch ();
-			$list [0] = $nombreProducto;
-			$list [1] = $idCCarne;
-			$list [2] = $idCarne;
-			$list [3] = $unidadMedida;
+			$list ["nombre"] = $nombreProducto;
+			$list ["idccarne"] = $idCCarne;
+			$list ["idcarne"] = $idCarne;
+			$list ["unidad"] = $unidadMedida;
 			$stmt->close ();
 			return $list;
 		} else {
 			return "Error No se encuentra el producto";
 		}
 	}
-	//
 	function delProductos($codigo) {
 		if ($stmt = $this->MySQL->PrepareQuery ( PRODUCTO_DEL_PRODCUTO )) {
 			$stmt->bind_param ( "i", $codigo );
@@ -474,9 +472,81 @@ class producto {
 			print "Error al Editar Producto\n";
 		}
 	}
-	function ObtieneListadoGrupos() {
+	function ObtieneListadoGrupos($id_carne) {
 		$list = "";
+		$default = "";
 		if ($stmt = $this->MySQL->PrepareQuery ( PRODUCTO_SEL_GRUPO )) {
+			$stmt->execute ();
+			$stmt->bind_result ( $id, $nombre );
+			while ( $stmt->fetch () ) {
+				if ($id == $id_carne)
+					$default = "selected";
+				$list .= "<option $default value=\"$id\">$nombre</option>";
+				$default = "";
+			}
+			$stmt->close ();
+		}
+		return $list;
+	}
+	function ObtieneListadoSubGrupos($id_corte) {
+		$list = "";
+		$default = "";
+		if ($stmt = $this->MySQL->PrepareQuery ( PRODUCTO_SEL_SUBGRUPO )) {
+			$stmt->execute ();
+			$stmt->bind_result ( $id, $nombre );
+			while ( $stmt->fetch () ) {
+				if ($id == $id_corte)
+					$default = "selected";
+				$list .= "<option $default value=\"$id\">$nombre</option>";
+				$default = "";
+			}
+			$stmt->close ();
+		}
+		return $list;
+	}
+}
+class listaprecio {
+	private $MySQL;
+	function listaprecio() {
+		$this->MySQL = new MySQL ();
+		$this->MySQL->Init ();
+	}
+	function insert($_idProdcuto, $_precio, $_precio_anterior) {
+		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_INS_LISTAPRECIOS )) {
+			$stmt->bind_param ( "iiii", $_idProdcuto, $_precio, $_precio_anterior, $_idProdcuto );
+			$stmt->execute ();
+			$stmt->close ();
+		} else {
+			print "Error al ingresar Precio\n";
+		}
+	}
+	function getListaPrecio($idProducto) {
+		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_SEL_LISTAPRECIO )) {
+			$stmt->bind_param ( "i", $idProducto );
+			$stmt->execute ();
+			$stmt->bind_result ( $_precio, $_fechacambioprecio, $_precio_anterior );
+			$stmt->fetch ();
+			$list ["precio"] = $_precio;
+			$list ["fechacambioprecio"] = $_fechacambioprecio;
+			$list ["precioanterior"] = $_precio_anterior;
+			$stmt->close ();
+			return $list;
+		} else {
+			return "Error No se encuentra el Precio";
+		}
+	}
+	function delListPrecio($codigo) {
+		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_DEL_LISTAPRECIO )) {
+			$stmt->bind_param ( "i", $codigo );
+			$stmt->execute ();
+			$stmt->close ();
+		} else {
+			print "No hay nada que Eliminar\n";
+		}
+	}
+	function ObtieneListadoProductos() {
+		$list = "";
+		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_SEL_PRODUCTOS )) {
 			$stmt->execute ();
 			$stmt->bind_result ( $id, $nombre );
 			while ( $stmt->fetch () ) {
@@ -486,17 +556,14 @@ class producto {
 		}
 		return $list;
 	}
-	function ObtieneListadoSubGrupos() {
-		$list = "";
-		if ($stmt = $this->MySQL->PrepareQuery ( PRODUCTO_SEL_SUBGRUPO )) {
+	function update($_idProdcuto, $_precio, $_precio_anterior) {
+		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_UPD_LISTAPRECIO )) {
+			$stmt->bind_param ( "iii", $_precio, $_precio_anterior, $_idProdcuto );
 			$stmt->execute ();
-			$stmt->bind_result ( $id, $nombre );
-			while ( $stmt->fetch () ) {
-				$list .= "<option value=\"$id\">$nombre</option>";
-			}
 			$stmt->close ();
+		} else {
+			print "Error al Editar Precio\n";
 		}
-		return $list;
 	}
 }
 ?>

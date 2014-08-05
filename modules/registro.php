@@ -10,6 +10,8 @@ if (isset ( $_POST ["Registrar"] )) {
 }
 
 ?>
+<div class="rightBar"></div>
+<div class="centerBar">
 <form action="#" method="post" name="input">
 	<table>
 		<tr>
@@ -58,3 +60,4 @@ for($i = 0; $i < $count; $i ++) {
 		</tr>
 	</table>
 </form>
+</div>
