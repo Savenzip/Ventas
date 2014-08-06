@@ -65,11 +65,19 @@ if (isset ( $_POST ["editar"] )) {
 	$idSubgrupo = "";
 }
 ?>
-<div class="rightBar"></div>
+<div class="rightBar">
+	<table>
+		<tr>
+			<th>Codigo</th>
+			<th>Nombre</th>
+		</tr>
+<?php print $Portal->ObtieneTablaSubGrupos();?>
+</table>
+</div>
 <div class="centerBar">
 	<h1 align="center">Control Sub-Grupos</h1>
-<form action="#" method="POST">
-	<table>
+	<form action="#" method="POST">
+		<table>
 			<tr>
 				<td>ID</td>
 			<?php

@@ -312,6 +312,54 @@ class Portal {
 		}
 		return $menu;
 	}
+	function ObtieneTablaSubGrupos() {
+		$list = "";
+		if ($stmt = $this->MySQL->PrepareQuery ( PORTAL_SEL_SUBGRUPO )) {
+			$stmt->execute ();
+			$stmt->bind_result ( $id, $nombre );
+			while ( $stmt->fetch () ) {
+				$list .= "<tr><td>$id</td><td>$nombre</td><td>";
+			}
+			$stmt->close ();
+		}
+		return $list;
+	}
+	function ObtieneTablaGrupos() {
+		$list = "";
+		if ($stmt = $this->MySQL->PrepareQuery ( PORTAL_SEL_GRUPO )) {
+			$stmt->execute ();
+			$stmt->bind_result ( $id, $nombre );
+			while ( $stmt->fetch () ) {
+				$list .= "<tr><td>$id</td><td>$nombre</td><td>";
+			}
+			$stmt->close ();
+		}
+		return $list;
+	}
+	function ObtieneTablaProductos() {
+		$list = "";
+		if ($stmt = $this->MySQL->PrepareQuery ( PORTAL_SEL_PRODUCTOS )) {
+			$stmt->execute ();
+			$stmt->bind_result ( $id, $nombre );
+			while ( $stmt->fetch () ) {
+				$list .= "<tr><td>$id</td><td>$nombre</td><td>";
+			}
+			$stmt->close ();
+		}
+		return $list;
+	}
+	function ObtieneTablaPrecios() {
+		$list = "";
+		if ($stmt = $this->MySQL->PrepareQuery ( PORTAL_SEL_LISTAPRECIOS )) {
+			$stmt->execute ();
+			$stmt->bind_result ( $id, $nombre, $precio, $fechaCambio,$precioAnterior);
+			while ( $stmt->fetch () ) {
+				$list .= "<tr><td>$id</td><td>$nombre</td><td>$precio</td><td>$fechaCambio</td><td>$precioAnterior</td><td>";
+			}
+			$stmt->close ();
+		}
+		return $list;
+	}
 }
 class Grupos {
 	function Grupos() {
@@ -511,9 +559,9 @@ class listaprecio {
 		$this->MySQL = new MySQL ();
 		$this->MySQL->Init ();
 	}
-	function insert($_idProdcuto, $_precio, $_precio_anterior) {
+	function insert($_idProducto, $_precio) {
 		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_INS_LISTAPRECIOS )) {
-			$stmt->bind_param ( "iiii", $_idProdcuto, $_precio, $_precio_anterior, $_idProdcuto );
+			$stmt->bind_param ( "ii", $_precio, $_idProducto );
 			$stmt->execute ();
 			$stmt->close ();
 		} else {
@@ -556,9 +604,9 @@ class listaprecio {
 		}
 		return $list;
 	}
-	function update($_idProdcuto, $_precio, $_precio_anterior) {
-		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_UPD_LISTAPRECIO )) {
-			$stmt->bind_param ( "iii", $_precio, $_precio_anterior, $_idProdcuto );
+	function update($_idProducto, $_precio, $_precio_anterior) {
+		if ($stmt = $this->MySQL->PrepareQuery ( LISTAPRECIO_UPD_PRODUCTO )) {
+			$stmt->bind_param ( "iii", $_precio, $_precio_anterior, $_idProducto );
 			$stmt->execute ();
 			$stmt->close ();
 		} else {

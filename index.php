@@ -38,7 +38,7 @@ $Portal = new Portal ();
 <body>
 	<div class="wrapper">
 		<div class="header">
-			<?php echo (date ( "D d-m-Y H:i:s", time () ));?>
+			<div class="hora"><?php print $_SESSION["usuario"] ." - ". (date ( "D d-m-Y H:i:s", time () ));?></div>
 		</div>
 		<div class="leftBar">
 			<?php print $Portal->sidebar($_SESSION["pw"]); ?>

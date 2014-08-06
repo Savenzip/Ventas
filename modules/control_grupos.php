@@ -63,13 +63,23 @@ if (isset ( $_POST ["editar"] )) {
 	}
 }
 ?>
-<div class="rightBar"></div>
-<div class="centerBar">
-<h1 align="center">Control Grupos</h1>
-<form action="#" method="POST">
+<div class="rightBar">
 	<table>
 		<tr>
-			<td>ID</td>
+			<th>Codigo</th>
+			<th>Nombre</th>
+		</tr>
+<?php print $Portal->ObtieneTablaGrupos();?>
+
+	
+	</table>
+</div>
+<div class="centerBar">
+	<h1 align="center">Control Grupos</h1>
+	<form action="#" method="POST">
+		<table>
+			<tr>
+				<td>ID</td>
 			<?php
 			if ($busqueda) {
 				echo "<td><input type=\"text\" name=\"id\" value=\"$idGrupo\" size=\"10\" readonly /> <input
@@ -80,13 +90,13 @@ if (isset ( $_POST ["editar"] )) {
 			}
 			?>
 		</tr>
-		<tr>
-			<td>Nombre:</td>
+			<tr>
+				<td>Nombre:</td>
 			<?php
 			echo "<td><input type=\"text\" name=\"nombre\" value=\"$nombreGrupo\" /></td>";
 			?>
 		</tr>
-		<tr>
+			<tr>
 			<?php
 			if ($busqueda) {
 				echo "<td colspan=\"2\"><input type=\"submit\" value=\"Guardar\" name=\"guardar\" disabled/>
@@ -99,6 +109,6 @@ if (isset ( $_POST ["editar"] )) {
 			}
 			?>
 		</tr>
-	</table>
-</form>
+		</table>
+	</form>
 </div>
